@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fetch API</title>
+</head>
+<body>
+	<div class="d-flex justify-content-center">
+        <div class="spinner-border" 
+             role="status" id="loading">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <h1>Registered Employees</h1>
+    <!-- table for showing data -->
+    <table id="employees"></table>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script type="text/javascript">
+
+		load_data()
+
+		async function load_data(url) {
+			var url = 'https://run.mocky.io/v3/9b184f9d-bf48-4467-9d8f-137ea0eba817';
+		    const response = await fetch(url);
+		    var data = await response.json();
+		    console.log(data)
+		    if (response) {
+		        hideloader();
+		    }
+		    show(data);
+	    }
+
+
+	    function hideloader() {
+		    document.getElementById('loading').style.display = 'none';
+		}
+
+		function show(data) {
+		    let tab = 
+		        `<tr>
+		          <th>Name</th>
+		          <th>Office</th>
+		          <th>Position</th>
+		          <th>Salary</th>
+		         </tr>`;
+		    
+		    // Loop to access all rows 
+		    for (let r of data.data) {
+		        tab += `<tr> 
+				    <td>${r.name} </td>
+				    <td>${r.office}</td>
+				    <td>${r.position}</td> 
+				    <td>${r.salary}</td>          
+				</tr>`;
+		    }
+		    // Setting innerHTML as tab variable
+		    document.getElementById("employees").innerHTML = tab;
+		}
+
+	</script>
+</body>
+</html>
